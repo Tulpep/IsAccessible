@@ -10,9 +10,20 @@ namespace Tulpep.IsAccessible.Controllers
     public class IsAccessibleController : ApiController
     {
         // GET api/values
-        public string Get(string nombre, string sexo)
+        public bool Get(string url)
         {
-            return "Hola " + nombre + ". Usted es: " + sexo;
+            using (HttpClient browser = new HttpClient())
+            {
+                var result = browser.GetAsync(url).Result;
+                if(result.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
     }
