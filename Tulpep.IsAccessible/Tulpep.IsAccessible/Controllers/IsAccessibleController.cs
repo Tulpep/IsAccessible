@@ -12,17 +12,24 @@ namespace Tulpep.IsAccessible.Controllers
         // GET api/values
         public bool Get(string url)
         {
-            using (HttpClient browser = new HttpClient())
+            try
             {
-                var result = browser.GetAsync(url).Result;
-                if(result.IsSuccessStatusCode)
+                using (HttpClient browser = new HttpClient())
                 {
-                    return true;
+                    var result = browser.GetAsync(url).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
-                {
-                    return false;
-                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
